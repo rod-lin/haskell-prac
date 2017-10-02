@@ -116,15 +116,3 @@ chainr1P opp lvalp rvalp = do
     op <- opp
     rval <- (chainr1P opp lvalp rvalp) <|> rvalp
     return $ op lval rval
-    
-data AST = Int Int | Op String AST AST deriving (Show)
-
-ast'SimpleOpP :: String -> Parser (AST -> AST -> AST)
-ast'SimpleOpP opstr = do
-    space0P; tokenP opstr; space0P
-    return $ Op opstr
-    
-ast'IntP :: Parser AST
-ast'IntP = do
-    int <- numberP
-    return $ Int int
